@@ -14,27 +14,42 @@
    limitations under the License.
  """
 import datetime
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, render_to_response, redirect
+from django.forms.models import modelformset_factory
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.views import generic
 
 from .models import TodoList, Item
-from .forms import NewItemForm
+from .forms import NewItemForm, NewListForm
 
-def get_new_item(request, kwargs):
+def new_item(request, pk):
     if request.method == 'POST': # If the form has been submitted...
         form = NewItemForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
-            nitemtext = form.cleaned_data['new_item']
-            nitem = Item(item_text=nitemtext, creation_date=datetime.datetime.now(), todo_list=TodoList.objects.get(id=kwargs['pk']))
-            nitem.save()
-
-            return HttpResponseRedirect('/detail/') # Redirect after POST
+            newitem = form.save(commit=False)
+            newitem.item_text = form.cleaned_data['item_text']
+            newitem.creation_date = datetime.datetime.now()
+            newitem.todo_list = TodoList.objects.get(id=pk)
+            newitem.save()
+            return HttpResponseRedirect(reverse('todo:detail', kwargs={'pk': pk})) # Redirect after POST
     else:
         form = NewItemForm() # An unbound form
 
-    return render_to_response('detail.html', {
+    return render(request, 'todo/newitem.html', {'form': form})
+
+def get_new_list(request):
+    if request.method == 'POST': # If the form has been submitted...
+        form = NewListForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            nlisttext = form.cleaned_data['new_list']
+            nlist = Item.objects.create(item_text=nlisttext, creation_date=datetime.datetime.now())
+            nlist.save()
+            return HttpResponseRedirect('/index/') # Redirect after POST
+    else:
+        form = NewItemForm() # An unbound form
+
+    return render_to_response('todo/index.html', {
         'form': form,
     })
 
@@ -45,11 +60,10 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return TodoList.objects.order_by('-list_title')[:5]
 
+    def post(self, request, *args, **kwargs):
+        get_new_list(request)
+        return HttpResponseRedirect('/todo/')
+
 class DetailView(generic.DetailView):
     model = TodoList
     template_name = 'todo/detail.html'
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        context = self.get_context_data(object=self.object)
-        get_new_item(request, kwargs)
-        return self.render_to_response(context)
