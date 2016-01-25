@@ -1,0 +1,14 @@
+<h1>{{ todolist.list_title }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<ul>
+{% for item in todolist.item_set.all %}
+    <li>{{ item.item_text }}</li>
+{% endfor %}
+<form action="/new-item/" method="POST">
+    {% csrf_token %}
+    <input type="text" name="new item"/>
+    <input type="submit" value="Add" />
+</form>
+</ul>
