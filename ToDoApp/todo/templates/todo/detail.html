@@ -6,9 +6,10 @@
 {% for item in todolist.item_set.all %}
     <li>{{ item.item_text }}</li>
 {% endfor %}
-<form action="/new-item/" method="POST">
+<form action="{% url 'todo:detail' todolist.id %}" method="POST">
     {% csrf_token %}
-    <input type="text" name="new item"/>
+    {{ form.as_p }}
+    <input type="text" name="new_item"/>
     <input type="submit" value="Add" />
 </form>
 </ul>
