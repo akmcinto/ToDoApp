@@ -1,12 +1,12 @@
-from django import forms
+from django.forms import ModelForm
 from .models import Item, TodoList
 
-class NewItemForm(forms.ModelForm):
+class NewItemForm(ModelForm):
     class Meta:
         model = Item
         fields = ['item_text']
 
-class NewListForm(forms.ModelForm):
+class NewListForm(ModelForm):
     class Meta:
         model = TodoList
-        fields = ['list_title', 'creation_date']
+        fields = ['list_title']

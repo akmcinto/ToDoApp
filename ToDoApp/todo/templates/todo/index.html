@@ -27,9 +27,7 @@ limitations under the License.
 {% else %}
     <p>No lists are available.</p>
 {% endif %}
-<form action="" method="POST">
+<form method="post" action="{% url 'todo:new_list' %}" >
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="text" name="new_list"/>
     <input type="submit" value="Add" />
 </form>

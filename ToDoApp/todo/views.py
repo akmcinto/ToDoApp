@@ -14,9 +14,8 @@
    limitations under the License.
  """
 import datetime
-from django.shortcuts import get_object_or_404, render, render_to_response, redirect
-from django.forms.models import modelformset_factory
-from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404, render, render_to_response
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
 
@@ -38,31 +37,26 @@ def new_item(request, pk):
 
     return render(request, 'todo/newitem.html', {'form': form})
 
-def get_new_list(request):
+def new_list(request):
     if request.method == 'POST': # If the form has been submitted...
         form = NewListForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
-            nlisttext = form.cleaned_data['new_list']
-            nlist = Item.objects.create(item_text=nlisttext, creation_date=datetime.datetime.now())
-            nlist.save()
-            return HttpResponseRedirect('/index/') # Redirect after POST
+            newlist = form.save(commit=False)
+            newlist.item_text = form.cleaned_data['list_title']
+            newlist.creation_date = datetime.datetime.now()
+            newlist.save()
+            return HttpResponseRedirect(reverse('todo:index')) # Redirect after POST
     else:
-        form = NewItemForm() # An unbound form
+        form = NewListForm() # An unbound form
 
-    return render_to_response('todo/index.html', {
+    return render(request, 'todo/newlist.html', {
         'form': form,
     })
 
 class IndexView(generic.ListView):
+    queryset = TodoList.objects.all
     template_name = "todo/index.html"
     context_object_name = 'latest_todo_list'
-
-    def get_queryset(self):
-        return TodoList.objects.order_by('-list_title')[:5]
-
-    def post(self, request, *args, **kwargs):
-        get_new_list(request)
-        return HttpResponseRedirect('/todo/')
 
 class DetailView(generic.DetailView):
     model = TodoList

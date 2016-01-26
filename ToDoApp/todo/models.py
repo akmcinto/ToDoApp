@@ -10,7 +10,7 @@ class TodoList(models.Model):
 
 class Item(models.Model):
     item_text = models.CharField(max_length=250)
-    creation_date = models.DateTimeField('date created')
+    creation_date = models.DateTimeField('date created', default=datetime.datetime.now())
     completed = models.BooleanField(default=False)
     todo_list = models.ForeignKey(TodoList)
 
