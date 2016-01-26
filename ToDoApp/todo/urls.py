@@ -23,4 +23,6 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
     url(r'^(?P<pk>[0-9]+)/newitem/$', views.new_item, name='new_item'),
     url(r'^newlist/$', views.new_list, name='new_list'),
+    url(r'^register/$', views.register, name='register'),
+    url(r'^login/$', views.user_login, name='login'),
 ]
