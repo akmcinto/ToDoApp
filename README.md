@@ -9,3 +9,5 @@ http://tutorial.djangogirls.org/en/django_forms/index.html, 2016-01-25
 Simeon Visser, http://stackoverflow.com/questions/11385976/django-queryset-vs-model-in-generic-view, 2016-01-25  
 brunofitas, http://stackoverflow.com/questions/29069306/provide-a-default-for-foreignkey-field-on-existing-entries-in-django, 2016-01-26  
 vikingosegundo, http://stackoverflow.com/questions/1477319/in-django-how-do-i-know-the-currently-logged-in-user, 2016-01-26  
+http://www.djangobook.com/en/2.0/chapter14.html, 2016-01-26  
+http://www.programcreek.com/python/example/60209/django.contrib.auth.forms.UserCreationForm, 2016-01-26  
