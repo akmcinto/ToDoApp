@@ -6,7 +6,7 @@ class ItemInline(admin.TabularInline):
     extra = 3
 
 class ListAdmin(admin.ModelAdmin):
-    fieldsets = [(None, {'fields': ['list_title']}),
+    fieldsets = [(None, {'fields': ['list_title', 'list_user']}),
                 ]
     inlines = [ItemInline]
     list_filter = ['list_title']

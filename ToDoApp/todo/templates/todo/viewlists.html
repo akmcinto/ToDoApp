@@ -16,6 +16,8 @@ limitations under the License.
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'todo/style.css' %}"
 
+<a href="{% url 'todo:logout' %}">Logout</a>
+
 {% if latest_todo_list %}
     <ul>
     {% for todolist in latest_todo_list %}
