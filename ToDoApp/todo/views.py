@@ -37,7 +37,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/index/')
+                return HttpResponseRedirect(reverse('todo:viewlists'))
             else:
                 # An inactive account was used - no logging in!
                 return HttpResponse("Your account is disabled.")
@@ -47,6 +47,11 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render_to_response('todo/login.html', {}, context)
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverese('todo:index'))
 
 # Modified from http://www.tangowithdjango.com/book/chapters/login.html, 2016-01-25
 def register(request):
@@ -64,6 +69,7 @@ def register(request):
             user.save()
             # Update our variable to tell the template registration was successful.
             registered = True
+            return HttpResponseRedirect(reverese('todo:index'))
         # Invalid form or forms - mistakes or something else?
         else:
             print (user_form.errors)
@@ -109,9 +115,12 @@ def new_list(request):
     })
 
 class IndexView(generic.ListView):
-    queryset = TodoList.objects.all
     template_name = "todo/index.html"
-    context_object_name = 'latest_todo_list'
+
+def view_lists(request):
+    latest_todo_list = TodoList.objects.filter(list_user=request.user)
+    context = {'latest_todo_list': latest_todo_list}
+    return render(request, 'todo/viewlists.html', context)
 
 class DetailView(generic.DetailView):
     model = TodoList
