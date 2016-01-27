@@ -11,3 +11,4 @@ brunofitas, http://stackoverflow.com/questions/29069306/provide-a-default-for-fo
 vikingosegundo, http://stackoverflow.com/questions/1477319/in-django-how-do-i-know-the-currently-logged-in-user, 2016-01-26  
 http://www.djangobook.com/en/2.0/chapter14.html, 2016-01-26  
 http://www.programcreek.com/python/example/60209/django.contrib.auth.forms.UserCreationForm, 2016-01-26  
+http://stackoverflow.com/questions/4951203/what-are-the-default-urls-for-djangos-user-authentication-system, 2016-01-26
