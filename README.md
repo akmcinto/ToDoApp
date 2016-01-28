@@ -9,3 +9,10 @@ http://tutorial.djangogirls.org/en/django_forms/index.html, 2016-01-25
 Simeon Visser, http://stackoverflow.com/questions/11385976/django-queryset-vs-model-in-generic-view, 2016-01-25  
 brunofitas, http://stackoverflow.com/questions/29069306/provide-a-default-for-foreignkey-field-on-existing-entries-in-django, 2016-01-26  
 vikingosegundo, http://stackoverflow.com/questions/1477319/in-django-how-do-i-know-the-currently-logged-in-user, 2016-01-26  
+http://www.djangobook.com/en/2.0/chapter14.html, 2016-01-26  
+http://www.programcreek.com/python/example/60209/django.contrib.auth.forms.UserCreationForm, 2016-01-26  
+Reiner Gerecke, http://stackoverflow.com/questions/4951203/what-are-the-default-urls-for-djangos-user-authentication-system, 2016-01-26  
+Joseph Silber, http://stackoverflow.com/questions/8824831/make-div-stay-at-bottom-of-pages-content-all-the-time-even-when-there-are-scrol, 2016-01-27  
+The Django Ninja, http://stackoverflow.com/questions/24571439/how-to-remove-error-message-in-django-forms, 2016-01-27  
+Ethan Yandow, https://groups.google.com/forum/#!topic/django-users/FMG64wjRxAE, 2016-01-28  
+zgoda, http://stackoverflow.com/questions/1355150/django-when-saving-how-can-you-check-if-a-field-has-changed, 2016-01-28  
