@@ -79,9 +79,9 @@ def register(request):
 
 @login_required
 def new_item(request, pk):
-    if request.method == 'POST': # If the form has been submitted...
-        form = NewItemForm(request.POST or None) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
+    if request.method == 'POST':
+        form = NewItemForm(request.POST or None)
+        if form.is_valid():
             newitem = form.save(commit=False)
             newitem.item_text = form.cleaned_data['item_text']
             newitem.creation_date = timezone.now()
@@ -89,23 +89,23 @@ def new_item(request, pk):
             newitem.save()
             return HttpResponseRedirect(reverse('todo:detail', kwargs={'pk': pk})) # Redirect after POST
     else:
-        form = NewItemForm() # An unbound form
+        form = NewItemForm()
 
     return render(request, 'todo/newitem.html', {'form': form})
 
 @login_required
 def new_list(request):
-    if request.method == 'POST': # If the form has been submitted...
-        form = NewListForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
+    if request.method == 'POST':
+        form = NewListForm(request.POST)
+        if form.is_valid():
             newlist = form.save(commit=False)
             newlist.item_text = form.cleaned_data['list_title']
             newlist.creation_date = timezone.now()
             newlist.list_user = request.user
             newlist.save()
-            return HttpResponseRedirect(reverse('todo:viewlists')) # Redirect after POST
+            return HttpResponseRedirect(reverse('todo:viewlists'))
     else:
-        form = NewListForm() # An unbound form
+        form = NewListForm() 
 
     return render(request, 'todo/newlist.html', {
         'form': form,
