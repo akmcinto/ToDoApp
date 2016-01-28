@@ -1,8 +1,11 @@
 # ToDoApp  
 App for making todo lists.  
 Code in "polls" folder is not used in the app.  It is old code made when going through a Django tutorial.  
+  
+### To Run:  
+To run the site, you must have Django and python installed.  Start a terminal from the inner TodoApp folder ([path to cloned repo]/TodoApp/TodoApp).  You should be in the folder with the manage.py file.  Run 'python manage.py runserver'.  The site is at http://localhost:8000/todo/.  
 
-#### References  
+##### References  
 Evan Grim, http://stackoverflow.com/questions/10695322/django-show-the-length-of-a-queryset-in-a-view, 2016-01-24 
 Benjamin Toueg, http://stackoverflow.com/questions/17179919/405-method-not-allowed-for-ajax-request-with-django, 2016-01-24  
 DrTrysa, http://stackoverflow.com/questions/8488230/django-how-to-get-a-model-instance-by-id, 2016-01-24  
