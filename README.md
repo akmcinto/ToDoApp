@@ -1,4 +1,6 @@
-# ToDoApp
+# ToDoApp  
+App for making todo lists.  
+Code in "polls" folder is not used in the app.  It is old code made when going through a Django tutorial.  
 
 #### References  
 Evan Grim, http://stackoverflow.com/questions/10695322/django-show-the-length-of-a-queryset-in-a-view, 2016-01-24 
