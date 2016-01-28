@@ -14,21 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'todo/style.css' %}"
+<link rel="stylesheet" type="text/css" href="{% static 'todo/style.css' %}" />
 
-<a href="{% url 'todo:logout' %}">Logout</a>
-
-{% if latest_todo_list %}
+<h1>Your Todo Lists:</h1>
+<div id="listbox">
+    {% if latest_todo_list %}
+        <ul>
+        {% for todolist in latest_todo_list %}
+            <li><a href="{% url 'todo:detail' todolist.id %}">{{ todolist.list_title }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No lists are available.</p>
+    {% endif %}
     <ul>
-    {% for todolist in latest_todo_list %}
-        <li><a href="{% url 'todo:detail' todolist.id %}">{{ todolist.list_title }}</a>
+        <li style="list-style-type:none">
+            <form method="post" action="{% url 'todo:new_list' %}" >
+                {% csrf_token %}
+                <input type="submit" value="Create New List" class="submit" />
+            </form>
         </li>
-    {% endfor %}
     </ul>
-{% else %}
-    <p>No lists are available.</p>
-{% endif %}
-<form method="post" action="{% url 'todo:new_list' %}" >
-    {% csrf_token %}
-    <input type="submit" value="Add" />
-</form>
+</div>
+
+
+<div class="buttonfooter">
+    <a href="{% url 'todo:logout' %}" ><button class="logout">Logout</button></a>
+</div>

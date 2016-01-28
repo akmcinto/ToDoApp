@@ -1,3 +1,89 @@
-ul.errorlist {
-    display: none;
+body {
+    padding: 5%;
+    margin: 5% 20%;
+    border-radius: 25px;
+    font-family: sans-serif;
+    background-color: white;
+}
+
+a.index {
+    margin: 10%;
+    font-size: 1.2em;
+}
+
+input.submit {
+    min-width: 100px;
+    font-size: 0.9em;
+    background-color: #CCFFFF;
+    border-radius: 5px;
+    border-color: #4AE3D1;
+    padding: 10px 15px;
+}
+input.complete {
+    font-size: 0.9em;
+    background-color: #CCFFE0;
+    border-radius: 5px;
+    border-color: #CCFFD6;
+    padding: 10px 15px;
+}
+input.itembutton {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    display: block;
+}
+a {
+    text-decoration: none;
+}
+
+li {
+    margin-bottom: 0.5em;
+}
+
+input.create {
+    min-width: 100px;
+    font-size: 0.9em;
+    background-color: #CCFFFF;
+    border-radius: 5px;
+    border-color: #4AE3D1;
+}
+
+.buttonfooter {
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 10%;
+    width: 50%;
+}
+
+.buttonfooter > a > .logout {
+    float: right;
+}
+
+#listbox {
+    overflow-y: auto;
+    max-height: 75%;
+}
+
+#itemlistbox {
+    overflow-y: auto;
+    max-height: 55%;
+}
+
+button {
+    min-width: 100px;
+    font-size: 0.8em;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+button.logout {
+    background-color: #FFEBE0;
+    border-color: #FFE8E3;
+}
+button.viewall {
+    background-color: #E3CCFF;
+    border-color: #E0CCFF;
+}
+
+html {
+    background-color: #CCEDFF;
 }

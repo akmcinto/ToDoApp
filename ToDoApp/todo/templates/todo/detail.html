@@ -1,13 +1,52 @@
-<h1>{{ todolist.list_title }}</h1>
+<!--
+   Copyright 2016 Andrea McIntosh
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ -->
+ {% load staticfiles %}
+ <link rel="stylesheet" type="text/css" href="{% static 'todo/style.css' %}" />
+
+{% for alist in thislist %}
+    <h1>{{ alist.list_title }}</h1>
+{% endfor %}
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<ul>
-{% for item in todolist.item_set.all %}
-    <li>{{ item.item_text }}</li>
-{% endfor %}
-<form method="post" action="{% url 'todo:new_item' todolist.id  %}" >
-    {% csrf_token %}
-    <input type="submit" value="Add" />
+<form method="post" action="{% url 'todo:detail' listid  %}" >
+    {% if list_items.count %}
+        <input type="submit" value="Completed selected items!" class="complete itembutton" />
+    {% endif %}
+    <ul id="itemlistbox">
+        {% for item in list_items %}
+            <li>
+                <!-- If item is not completed have chackbox to allow user to complete it.
+                    If it is completed remove checkbox and strike-through text -->
+                {% csrf_token %}
+                {% if item.completed %}
+                    <strike>
+                {% endif %}
+                    {{ item.item_text }}
+                {% if item.completed %}
+                    </strike>
+                {% else %}
+                    <input type="checkbox" id="check{{ item.id }}" value="{{ item.id }}" name="check" />
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
 </form>
-</ul>
+<a href="{% url 'todo:new_item' listid  %}"><input type="submit" value="Add new item" class="submit itembutton" /></a>
+
+<div class="buttonfooter">
+    <a href="{% url 'todo:logout' %}" ><button class="logout">Logout</button></a>
+    <a href="{% url 'todo:viewlists' %}" ><button class="viewall">All Lists</button></a>
+</div>

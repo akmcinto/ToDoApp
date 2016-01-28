@@ -25,7 +25,7 @@ from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm
 
 from .models import TodoList, Item
-from .forms import NewItemForm, NewListForm, UserRegistration
+from .forms import NewItemForm, NewListForm
 
 # Modified from http://www.tangowithdjango.com/book/chapters/login.html, 2016-01-25
 def user_login(request):
@@ -35,8 +35,8 @@ def user_login(request):
         # Gather the username and password provided by the user.
         username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user:
+        user = authenticate(username, password)
+        if user is not None:
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect(reverse('todo:viewlists'))
@@ -50,7 +50,6 @@ def user_login(request):
     else:
         return render_to_response('todo/login.html', {}, context)
 
-@login_required
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('todo:index'))
@@ -63,6 +62,7 @@ def register(request):
             # Save the user's form data to the database.
             new_user = user_form.save()
             new_user.set_password(user_form.cleaned_data.get('password1'))
+            new_user.save()
             new_user = authenticate(username=user_form.cleaned_data.get('username'), password=user_form.cleaned_data.get('password1'))
             login(request, new_user)
             return HttpResponseRedirect(reverse('todo:viewlists'))
@@ -80,7 +80,7 @@ def register(request):
 @login_required
 def new_item(request, pk):
     if request.method == 'POST': # If the form has been submitted...
-        form = NewItemForm(request.POST) # A form bound to the POST data
+        form = NewItemForm(request.POST or None) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
             newitem = form.save(commit=False)
             newitem.item_text = form.cleaned_data['item_text']
@@ -120,6 +120,15 @@ def view_lists(request):
     context = {'latest_todo_list': latest_todo_list}
     return render(request, 'todo/viewlists.html', context)
 
-class DetailView(generic.DetailView):
-    model = TodoList
-    template_name = 'todo/detail.html'
+def list_details(request, pk):
+    thislist = TodoList.objects.filter(id=pk)
+    list_items = Item.objects.filter(todo_list=thislist)
+    context = {'list_items': list_items, 'thislist': thislist, 'listid': pk}
+
+    done = request.POST.getlist('check')
+    for i in done:
+        item = list_items.filter(id=i)
+        for instance in item:
+            instance.completed = True
+            instance.save()
+    return render(request, 'todo/detail.html', context)

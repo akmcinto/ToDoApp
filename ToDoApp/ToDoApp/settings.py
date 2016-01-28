@@ -52,6 +52,7 @@ MIDDLEWARE_CLASSES = [
 ]
 
 ROOT_URLCONF = 'ToDoApp.urls'
+LOGIN_REDIRECT_URL = '/todo/accounts/viewlists/'
 
 TEMPLATES = [
     {

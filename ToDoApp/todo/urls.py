@@ -14,17 +14,18 @@
    limitations under the License.
  """
 
-from django.conf.urls import url
+from django.conf.urls import url, include
 from . import views
 
 app_name = 'todo'
 urlpatterns = [
     url(r'^$', views.index_view, name='index'),
-    url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
+    url(r'^(?P<pk>[0-9]+)/$', views.list_details, name='detail'),
     url(r'^(?P<pk>[0-9]+)/newitem/$', views.new_item, name='new_item'),
     url(r'^newlist/$', views.new_list, name='new_list'),
     url(r'^register/$', views.register, name='register'),
-    url(r'^login/$', views.user_login, name='login'),
-    url(r'^logout/$', views.user_logout, name='logout'),
-    url(r'^viewlists/$', views.view_lists, name='viewlists')
+    url(r'^accounts/login/$', 'django.contrib.auth.views.login', name='login'),
+    url(r'^accounts/logout/$', views.user_logout, name='logout'),
+    url(r'^accounts/viewlists/$', views.view_lists, name='viewlists'),
+    url(r'^accounts/', include('django.contrib.auth.urls')),
 ]

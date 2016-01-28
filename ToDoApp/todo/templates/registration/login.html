@@ -13,21 +13,22 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  -->
+ {% load staticfiles %}
+ <link rel="stylesheet" type="text/css" href="{% static 'todo/style.css' %}" />
 
-{% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'todo/style.css' %}" />
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
 
-<h1>Name your Todo list:</h1>
-<form method="post" action="" >
-    {% csrf_token %}
-    {% for field in form %}
-        {# {{ field.errors }} #}
-        {{ field }}
-    {% endfor %}
-    <input type="submit" value="Create" class="create" />
+<form method="post" action="">
+{% csrf_token %}
+
+    <p>
+        <label>Username:  </label><input type="text" name="username" value="" size="50" />
+    <p/>
+    <p>
+        <label>Password:  </label><input type="password" name="password" value="" size="50" />
+    </p>
+
+    <input type="submit" value="Login" class="submit" />
 </form>
-
-<div class="buttonfooter">
-    <a href="{% url 'todo:logout' %}" ><button class="logout">Logout</button></a>
-    <a href="{% url 'todo:viewlists' %}" ><button class="viewall">All Lists</button></a>
-</div>
